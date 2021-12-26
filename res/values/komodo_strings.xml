@@ -81,4 +81,10 @@
     <string name="proximity_wake_title">Prevent accidental wake-up</string>
     <string name="proximity_wake_summary">Check the proximity sensor prior to waking up screen from Double Tap 2 Wake gesture</string>
 
+    <!-- category string -->
+    <string name="device_category_title">Device Info</string>
+    <string name="connectivity_category_title">Connectivity Settings</string>
+    <string name="system_category_title">System Settings</string>
+    <string name="privacy_category_title">Privacy Settings</string>
+
 </resources>

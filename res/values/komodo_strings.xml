@@ -87,4 +87,6 @@
     <string name="system_category_title">System Settings</string>
     <string name="privacy_category_title">Privacy Settings</string>
 
+   <!-- user card summary text -->
+       <string name="usercard_summary">Tap for more info</string>
 </resources>

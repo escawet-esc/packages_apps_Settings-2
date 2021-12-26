@@ -33,7 +33,6 @@
 
     <!-- Komodo maintainer -->
     <string name="maintainer">Maintainer</string>
-    <string name="maintainer_name" translatable="false">Unknown</string>
 
     <!-- SELinux Status -->
     <string name="selinux_status">SELinux status</string>

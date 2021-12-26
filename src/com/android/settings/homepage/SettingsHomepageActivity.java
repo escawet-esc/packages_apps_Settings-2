@@ -17,6 +17,7 @@
 package com.android.settings.homepage;
 
 import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
 import android.app.ActivityManager;
 import android.app.settings.SettingsEnums;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import androidx.fragment.app.Fragment;
@@ -40,7 +42,9 @@ import com.android.settings.homepage.contextualcards.ContextualCardsFragment;
 import com.android.settings.overlay.FeatureFactory;
 import com.android.settingslib.core.lifecycle.HideNonSystemOverlayMixin;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import java.util.ArrayList;
 
 /** Settings homepage activity */
 public class SettingsHomepageActivity extends FragmentActivity implements
@@ -53,6 +57,16 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     private View mHomepageView;
     private CategoryMixin mCategoryMixin;
     CollapsingToolbarLayout collapsing_toolbar;
+
+    static ArrayList<String> text=new ArrayList<>();
+    static {
+        text.add("Thanks, for using KomodoOS");
+        text.add("Local Pride");
+        text.add("Good Morning");
+        text.add("Good Evening");
+        text.add("Good Night");
+	text.add("we love you 3000");
+    }
 
     @Override
     public CategoryMixin getCategoryMixin() {
@@ -68,6 +82,21 @@ public class SettingsHomepageActivity extends FragmentActivity implements
 	LinearLayout commonCon = root.findViewById(R.id.common_con);
         final Toolbar toolbar = root.findViewById(R.id.search_action_bar);
 	collapsing_toolbar =  root.findViewById(R.id.collapsing_toolbar);
+        TextView greeter = root.findViewById(R.id.greeter);
+	greeter.setText(text.get(randomNum(0, text.size()-1)));
+
+	AppBarLayout appBarLayout = root.findViewById(R.id.appbar);
+        appBarLayout.addOnOffsetChangedListener((appBarLayout1, i) -> {
+
+            float abs = ((float) Math.abs(i)) / ((float) appBarLayout1.getTotalScrollRange());
+            float f2 = 1.0f - abs;
+            //greeter text
+            if (f2 == 1.0)
+                ObjectAnimator.ofFloat(greeter, View.ALPHA, 1f).setDuration(500).start();
+            else
+                greeter.setAlpha(0f);
+
+        });
 
         getLifecycle().addObserver(new HideNonSystemOverlayMixin(this));
         collapsing_toolbar.setTitle("Settings");
@@ -103,5 +132,10 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         final int searchBarHeight = getResources().getDimensionPixelSize(R.dimen.search_bar_height);
         final int searchBarMargin = getResources().getDimensionPixelSize(R.dimen.search_bar_margin);
         return searchBarHeight + searchBarMargin * 2;
+    }
+
+    private int randomNum(int min , int max) {
+	int r = (max - min) + 1;
+	return (int)(Math.random() * r) + min;
     }
 }
